@@ -1,6 +1,10 @@
 package br.una.zisc.dao;
 // Generated 29/10/2016 15:56:44 by Hibernate Tools 4.3.1
 
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
+
 
 
 /**
@@ -10,6 +14,7 @@ public class Seguranca  implements java.io.Serializable {
 
 
      private int idseguranca;
+     @ManyToOne(fetch = FetchType.EAGER)
      private Usuario usuario;
      private String hash;
      private String password;
@@ -17,6 +22,13 @@ public class Seguranca  implements java.io.Serializable {
 
     public Seguranca() {
     }
+
+    @Override
+    public String toString() {
+        return "Seguranca{" + "idseguranca=" + idseguranca + ", usuario=" + usuario + ", hash=" + hash + ", password=" + password + ", copare=" + copare + '}';
+    }
+
+
 
     public Seguranca(int idseguranca, Usuario usuario, String hash, String password, String copare) {
        this.idseguranca = idseguranca;

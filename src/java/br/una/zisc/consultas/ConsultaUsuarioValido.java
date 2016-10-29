@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package br.una.zisc.consultas;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
