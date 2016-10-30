@@ -18,17 +18,39 @@ import org.hibernate.Session;
 public class Consultas {
 
     @SuppressWarnings("unchecked")
-    public Usuario buscaUsuario() {
+    public Usuario buscaUsuario(String email) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         s.beginTransaction();
 
-        List<Usuario> lista = (List<Usuario>) s.createQuery("from Usuario u where u.nome ='Maria'").list();
+        Query q = s.createQuery("from Usuario u where u.email = :email");
+        q.setParameter("email", email);
+        List<Usuario> lista = (List<Usuario>) q.list();
         System.err.println("Acessando banco!");
         Usuario usuario = lista.get(0);
-        //System.err.println(usuario);
         s.getTransaction().commit();
         System.err.println("Commit!");
         return usuario;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Usuario requisicaoLogin(String email, String senha) {
+
+        Usuario user = new Usuario();
+
+        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        s.beginTransaction();
+
+        Query q = s.createQuery("from Seguranca seg where seg.usuario.email = :email");
+        q.setParameter("email", email);
+
+        List<Seguranca> lista = (List<Seguranca>) q.list();
+
+        if (lista.get(0).getHash().equals(senha)) {
+            s.getTransaction().commit();
+            return buscaUsuario(email);
+        }
+
+        return user;
     }
 
     @SuppressWarnings("unchecked")
@@ -38,7 +60,7 @@ public class Consultas {
         s.beginTransaction();
         String resultado = "false";
 
-        List<Usuario> lista = (List<Usuario>) s.createQuery("from Usuario u where u.email ='marcos@teste.com.br'").list();
+        List<Usuario> lista = (List<Usuario>) s.createQuery("from Usuario u where u.email ='mariaap@gmail.com'").list();
         s.getTransaction().commit();
 
         if (!lista.isEmpty()) {
@@ -46,20 +68,5 @@ public class Consultas {
         }
 
         return resultado;
-    }
-
-    @SuppressWarnings("unchecked")
-    public Seguranca requisicaoLogin(String email) {
-
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-        s.beginTransaction();
-
-        Query q = s.createQuery("from Seguranca seg where seg.usuario.email = :email");
-        q.setParameter("email", email);
-        List<Seguranca> lista = (List<Seguranca>) q.list();
-        System.err.println(lista.get(0).toString());
-        s.getTransaction().commit();
-
-        return lista.get(0);
     }
 }

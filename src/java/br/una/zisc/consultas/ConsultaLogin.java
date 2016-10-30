@@ -13,28 +13,28 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author Marcos Benevides
  */
+@Path("/login/{email}/{senha}")
 public class ConsultaLogin {
 
     @GET
-    @Path("login/{email}/{senha}")
     @Produces(MediaType.APPLICATION_JSON)
     public String login(@PathParam("email") String email,
-                        @PathParam("senha") String senha) {
-        System.err.println(email.toString() + " " + senha.toString());
+            @PathParam("senha") String senha) {
+        System.err.println(email + " " + senha);
         Consultas con = new Consultas();
         Gson gson = new Gson();
-        Seguranca usu = con.requisicaoLogin(email);
-        if (usu.getPassword().equals(senha)) {
-            String json = gson.toJson(usu);
-            return json;
-        }
-        String json = gson.toJson("");
+        Usuario usuario = new Usuario(
+                con.requisicaoLogin(email, senha).getIdusuario(),
+                con.requisicaoLogin(email, senha).getNome(),
+                con.requisicaoLogin(email, senha).getEmail());
+        String json = gson.toJson(usuario);
         return json;
     }
 

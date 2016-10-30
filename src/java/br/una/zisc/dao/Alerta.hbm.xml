@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/10/2016 15:56:45 by Hibernate Tools 4.3.1 -->
+<!-- Generated 30/10/2016 00:26:12 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="br.una.zisc.dao.Alerta" table="ALERTA" schema="dbo" catalog="banco_dados_api" optimistic-lock="version">
         <id name="idalerta" type="int">
@@ -19,6 +19,9 @@
         </property>
         <property name="latitude" type="string">
             <column name="latitude" length="15" not-null="true" />
+        </property>
+        <property name="statusAtivo" type="boolean">
+            <column name="status_ativo" not-null="true" />
         </property>
         <property name="tipo" type="string">
             <column name="tipo" length="20" not-null="true" />

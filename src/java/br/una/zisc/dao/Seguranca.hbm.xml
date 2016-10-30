@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/10/2016 15:56:45 by Hibernate Tools 4.3.1 -->
+<!-- Generated 30/10/2016 00:26:12 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="br.una.zisc.dao.Seguranca" table="SEGURANCA" schema="dbo" catalog="banco_dados_api" optimistic-lock="version">
         <id name="idseguranca" type="int">
@@ -13,12 +13,6 @@
         </many-to-one>
         <property name="hash" type="string">
             <column name="hash" length="4" not-null="true" />
-        </property>
-        <property name="password" type="string">
-            <column name="password" length="32" not-null="true" />
-        </property>
-        <property name="copare" type="string">
-            <column name="copare" length="4" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>
