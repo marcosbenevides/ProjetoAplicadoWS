@@ -7,6 +7,7 @@ package br.una.zisc.consultas;
 
 import br.una.zisc.dao.*;
 import br.una.zisc.hibernate.HibernateUtil;
+import java.util.AbstractList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -51,6 +52,33 @@ public class Consultas {
         }
 
         return user;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Alerta> buscaAlerta(String cidade, String bairro) {
+        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        s.beginTransaction();
+
+        Query q = s.createQuery("from Alerta alerta where alerta.cidade = :cidade and alerta.bairro = :bairro");
+        q.setParameter("cidade", cidade);
+        q.setParameter("bairro", bairro);
+
+        List<Alerta> lista = (List<Alerta>) q.list();
+        List<Alerta> lista1 = null;
+
+        for (int i = 0; i < lista.size(); i++) {
+
+            Alerta alerta = lista.get(i);
+
+            lista1.add(
+                    /*alerta.getIdalerta(),
+                    alerta.getLoghora(),
+                    alerta.getLatitude(),
+                    alerta.getLongitude(),
+                    alerta.getTipo()*/);
+        }
+
+        return lista1;
     }
 
     @SuppressWarnings("unchecked")
