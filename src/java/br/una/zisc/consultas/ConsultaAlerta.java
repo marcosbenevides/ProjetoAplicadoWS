@@ -7,37 +7,38 @@ package br.una.zisc.consultas;
 
 import br.una.zisc.dao.Alerta;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author Marcos Benevides
  */
-@Path("/consultaalerta/{cidade}/{bairro}")
+@Path("/consultaalerta/{bairro}/{cidade}/{estado}")
 public class ConsultaAlerta {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getAlerta(
+    public GenericEntity<List<Alerta>> getAlerta(
+            @PathParam("bairro") String bairro,
             @PathParam("cidade") String cidade,
-            @PathParam("bairro") String bairro) {
+            @PathParam("estado") String estado) {
 
         Consultas con = new Consultas();
         Gson gson = new Gson();
-        
-        List<Alerta> lista = con.buscaAlerta(cidade, bairro);
-        List<String> listaJson = null;
-        
-        for (int i = 0; i < lista.size(); i++) {
-            listaJson.add(gson.toJson(lista.get(i)));
-        }
-        
-        return listaJson;
-    }
 
+        List<Alerta> lista = con.buscaAlerta(bairro, cidade, estado);
+        
+        GenericEntity<List<Alerta>> entidade = new GenericEntity<List<Alerta>>(lista){};
+        
+        return entidade;
+
+    }
 }

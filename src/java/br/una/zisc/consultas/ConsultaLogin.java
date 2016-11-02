@@ -6,14 +6,11 @@
 package br.una.zisc.consultas;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.JsonAdapter;
 import br.una.zisc.dao.*;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
